@@ -13,7 +13,7 @@ function App() {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <Link to="/games">Games</Link>
           </li>
           <li>
             <Link to="/topics">Topics</Link>
@@ -30,7 +30,7 @@ function App() {
         <hr />
 
         <Route exact path="/" component={Home} />
-        <Route path="/about" component={About} />
+        <Route path="/games" component={Games} />
         <Route path="/topics" component={Topics} />
         { /* New component/paths I added */ }
         <Route path="/thing" component={Thing} />
@@ -48,12 +48,26 @@ function Home() {
   );
 }
 
-function About() {
+function Games() {
+  const gameNames = ["Storm King's Thunder",
+    "Waterdeep: Dragon Heist",
+    "Critical Roll"
+  ];
+
+  const games = gameNames.map((name) => <Game name={name}/>);
+
   return (
     <div>
-      <h2>About</h2>
+      <h2>Games</h2>
+      <ul>
+        {games}
+      </ul>
     </div>
   );
+}
+
+function Game(props) {
+  return <li>{props.name}</li>;
 }
 
 function Topics({ match }) {
