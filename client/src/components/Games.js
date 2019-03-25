@@ -2,6 +2,8 @@ import React from 'react'
 
 import Game from './Game'
 
+import axios from 'axios';
+
 {/* TODO: Make this passed in or managed somewhere else, maybe? */}
 
 class Games extends React.Component {
@@ -10,14 +12,21 @@ class Games extends React.Component {
 
     this.state = {};
     this.state.nextId = 4;
-    this.state.games = [
-      {id: 1, name: "Storm King's Thunder"},
-      {id: 2, name: "Waterdeep: Dragon Heist"},
-      {id: 3, name: "Critical Roll"}
-    ];
+    this.state.games = [];
 
     this.createGame = this.createGame.bind(this);
 
+  }
+
+  componentDidMount() {
+    axios.get("/api/v1/games.json")
+    .then(response => {
+      console.log(response)
+      this.setState({
+          games: response.data
+      })
+    })
+    .catch(error => console.log(error))
   }
 
   createGame(name) {
