@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+games = Game.create([
+  { name: "Storm King's Thunder" },
+  { name: "Waterdeep: Dragon Heist" },
+  { name: "Critical Role" },
+])
