@@ -6,7 +6,8 @@ Rails.application.routes.draw do
   end
 
   # route any path we don't recognize to react-router?
-  root "application#fallback_index_html"
+  root to: "application#fallback_index_html"
+
   get '*path', to: "application#fallback_index_html", constraints: ->(request) do
     !request.xhr? && request.format.html?
   end
