@@ -65,9 +65,9 @@ class GameForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label for="gameName">
+        <label>
           Name:
-          <input type="text" id="gameName" value={this.state.value} onChange={this.handleChange} />
+          <input type="text" name="name" value={this.state.value} onChange={this.handleChange} />
         </label>
         <input type="submit"></input>
       </form>
