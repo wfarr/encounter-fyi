@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 class Game extends React.Component {
   render() {
-    return (
-    <li>
-      {this.props.name}
-    </li>
-    );
+    return <li>{this.props.name}</li>;
   }
 }
 

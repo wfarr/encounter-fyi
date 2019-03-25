@@ -1,7 +1,7 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
-import Games from './components/Games'
+import Games from './components/Games';
 
 function App() {
   return (
@@ -32,7 +32,5 @@ function Home() {
     </div>
   );
 }
-
-
 
 export default App;
