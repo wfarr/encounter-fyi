@@ -1,7 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Games from './components/Games'
+import NotFound from './components/NotFound'
 
 function App() {
   return (
@@ -18,8 +19,11 @@ function App() {
 
         <hr />
 
-        <Route exact path="/" component={Home} />
-        <Route path="/games" component={Games} />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/games" component={Games} />
+          <Route component={NotFound}/>
+        </Switch>
       </div>
     </Router>
   );
