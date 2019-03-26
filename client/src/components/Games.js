@@ -20,7 +20,7 @@ class Games extends React.Component {
     this.createGame = this.createGame.bind(this);
   }
 
-  componentDidMount() {
+  refreshGames() {
     axios
       .get('/api/v1/games.json')
       .then(response => {
@@ -32,11 +32,24 @@ class Games extends React.Component {
       .catch(error => console.log(error));
   }
 
+  componentDidMount() {
+    this.refreshGames();
+  }
+
   createGame(name) {
-    this.setState({
-      games: [...this.state.games, { id: this.state.nextId, name: name }],
-      nextId: this.state.nextId + 1
-    });
+    console.log(name);
+    axios
+      .post('/api/v1/games', { game: { name: name } })
+      .then(response => {
+        console.log(response);
+
+        const game = response.data;
+        this.setState({
+          games: [...this.state.games, game],
+          nextId: this.state.nextId + 1
+        });
+      })
+      .catch(error => console.log(error));
   }
 
   render() {
