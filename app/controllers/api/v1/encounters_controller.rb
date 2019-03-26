@@ -1,4 +1,4 @@
-module API::V1
+module Api::V1
   class EncountersController < ApplicationController
     before_action :set_encounter, only: [:show, :update, :destroy]
 
