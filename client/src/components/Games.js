@@ -14,7 +14,6 @@ class Games extends React.Component {
     super(props);
 
     this.state = {};
-    this.state.nextId = 4;
     this.state.games = [];
 
     this.createGame = this.createGame.bind(this);
@@ -45,8 +44,7 @@ class Games extends React.Component {
 
         const game = response.data;
         this.setState({
-          games: [...this.state.games, game],
-          nextId: this.state.nextId + 1
+          games: [...this.state.games, game]
         });
       })
       .catch(error => console.log(error));
