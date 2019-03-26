@@ -1,3 +1,3 @@
 class Game < ApplicationRecord
-  has_many :encounters, counter_cache: true
+  has_many :encounters, dependent: :destroy
 end

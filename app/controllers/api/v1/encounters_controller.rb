@@ -5,7 +5,7 @@ module Api::V1
     # GET /encounters
     def index
       if params[:game_id]
-        @encounters = Encounter.where(game_id: game_id)
+        @encounters = Encounter.where(game_id: params[:game_id])
       else
         @encounters = Encounter.all
       end

@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import GameEncounterList from './GameEncounterList';
+
 class Game extends React.Component {
   constructor(props) {
     super(props);
@@ -9,14 +11,15 @@ class Game extends React.Component {
     this.props = props;
     this.state = {
       loaded: false,
-      gameId: this.props.match.params.id
+      id: this.props.match.params.id,
+      game: {}
     };
   }
 
   componentDidMount() {
-    if (this.state.game === undefined) {
+    if (!this.state.loaded) {
       axios
-        .get(`/api/v1/games/${this.state.gameId}`)
+        .get(`/api/v1/games/${this.state.id}`)
         .then(request => {
           console.log(request.data);
           this.setState({ loaded: true, game: request.data });
@@ -32,6 +35,10 @@ class Game extends React.Component {
           <h1>GAME DETAIL</h1>
           <h2>{this.props.match.params.id}</h2>
           <h2>{this.state.game.name}</h2>
+          <GameEncounterList
+            gameId={this.state.id}
+            encounters={this.state.game.encounters}
+          />
         </div>
       );
     } else {
