@@ -20,7 +20,7 @@ function App() {
         <hr />
 
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route path="/" component={Home} />
           <Route path="/games" component={Games} />
           <Route component={NotFound}/>
         </Switch>
