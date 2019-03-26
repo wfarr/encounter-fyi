@@ -19,9 +19,11 @@ function App() {
 
         <hr />
 
-        <Route exact path="/" component={Home} />
-        <Route path="/games" component={Games} />
-        <Route path="*" component={NotFound}/>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/games" component={Games} />
+          <Route component={NotFound}/>
+        </Switch>
       </div>
     </Router>
   );
