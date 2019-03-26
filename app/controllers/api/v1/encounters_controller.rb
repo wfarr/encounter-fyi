@@ -7,7 +7,7 @@ module Api::V1
       if params[:game_id]
         @encounters = Encounter.where(game_id: params[:game_id])
       else
-        @encounters = Encounter.all
+        @encounters = Encounter.where(game_id: nil)
       end
 
       render json: @encounters
