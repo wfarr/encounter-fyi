@@ -11,7 +11,7 @@ module Api::V1
 
     # GET /games/1
     def show
-      render json: @game
+      render json: @game, include: { encounters: {} }
     end
 
     # POST /games
