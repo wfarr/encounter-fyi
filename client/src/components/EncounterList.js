@@ -19,7 +19,7 @@ class EncounterList extends React.Component {
     this.createEncounter = this.createEncounter.bind(this);
   }
 
-  refreshGames() {
+  refreshEncounters() {
     axios
       .get('/api/v1/encounters.json')
       .then(response => {
@@ -32,7 +32,7 @@ class EncounterList extends React.Component {
   }
 
   componentDidMount() {
-    this.refreshGames();
+    this.refreshEncounters();
   }
 
   createEncounter(name) {
