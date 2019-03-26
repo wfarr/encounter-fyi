@@ -1,31 +1,31 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import React from 'react';
+import { Route, Switch, Link } from 'react-router-dom';
 
-import Games from './components/Games'
-import NotFound from './components/NotFound'
+import Games from './components/Games';
+import Game from './components/Game';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
-    <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/games">Games</Link>
-          </li>
-        </ul>
+    <div>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/games">Games</Link>
+        </li>
+      </ul>
 
-        <hr />
+      <hr />
 
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/games" component={Games} />
-          <Route component={NotFound}/>
-        </Switch>
-      </div>
-    </Router>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/games" component={Games} />
+        <Route path="/games/:id" component={Game} />
+        <Route component={NotFound} />
+      </Switch>
+    </div>
   );
 }
 
@@ -36,7 +36,5 @@ function Home() {
     </div>
   );
 }
-
-
 
 export default App;
