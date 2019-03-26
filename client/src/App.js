@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 import Games from './components/Games'
+import NotFound from './components/NotFound'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
 
         <Route exact path="/" component={Home} />
         <Route path="/games" component={Games} />
+        <Route path="*" component={NotFound}/>
       </div>
     </Router>
   );
