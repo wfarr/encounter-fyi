@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-// import GameEncounterForm from './GameEncounterForm';
+import GameEncounterForm from './GameEncounterForm';
 
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ class GameEncounterList extends React.Component {
     this.state.encounters = props.encounters || [];
     this.state.gameId = props.gameId;
 
-    this.createEncounter = this.createEncounter.bind(this);
+    this.createGameEncounter = this.createGameEncounter.bind(this);
   }
 
   refreshGameEncounters() {
@@ -36,10 +36,13 @@ class GameEncounterList extends React.Component {
     this.refreshGameEncounters();
   }
 
-  createEncounter(name) {
+  createGameEncounter(name) {
     console.log(name);
     axios
-      .post(`/api/v1/games/${this.state.gameId}/encounters`, { name: name })
+      .post(`/api/v1/games/${this.state.gameId}/encounters`, {
+        game_id: this.state.gameId,
+        name: name
+      })
       .then(response => {
         console.log(response);
 
@@ -61,7 +64,7 @@ class GameEncounterList extends React.Component {
           )}
         </ul>
 
-        {/* <EncounterForm createHandler={this.createEncounter} /> */}
+        <GameEncounterForm createHandler={this.createGameEncounter} />
       </div>
     );
   }
