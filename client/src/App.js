@@ -20,8 +20,8 @@ function App() {
         <hr />
 
         <Switch>
-          <Route path="/" component={Home} />
-          <Route path="/games" component={Games} />
+          <Route exact path="/" component={Home} />
+          <Route exact path="/games" component={Games} />
           <Route component={NotFound}/>
         </Switch>
       </div>
