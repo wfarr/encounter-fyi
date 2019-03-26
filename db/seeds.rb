@@ -11,3 +11,7 @@ games = Game.create([
   { name: "Waterdeep: Dragon Heist" },
   { name: "Critical Role" },
 ])
+
+games.each do |g|
+  rand(10).times { |i| g.encounters.create(name: "random encounter #{i}") }
+end

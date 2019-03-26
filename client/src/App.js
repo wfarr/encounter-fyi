@@ -28,6 +28,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/games" component={Games} />
         <Route exact path="/encounters" component={EncounterList} />
+        <Route path="/games/:game_id/encounters/:id" component={Encounter} />
         <Route path="/games/:id" component={Game} />
         <Route path="/encounters/:id" component={Encounter} />
         <Route component={NotFound} />
