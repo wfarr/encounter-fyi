@@ -66,7 +66,7 @@ function gameLi(game) {
   return (
     <li key={game.id}>
       <Link to={{ pathname: `/games/${game.id}`, state: { game: game } }}>
-        {game.name}
+        {game.name} -- {game.encounters_count} encounters
       </Link>
     </li>
   );
