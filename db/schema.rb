@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_26_184535) do
+ActiveRecord::Schema.define(version: 2019_03_26_202341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2019_03_26_184535) do
     t.bigint "game_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "state", default: {}
     t.index ["game_id"], name: "index_encounters_on_game_id"
   end
 

@@ -51,7 +51,7 @@ module Api::V1
 
       # Only allow a trusted parameter "white list" through.
       def encounter_params
-        params.require(:encounter).permit(:name, :game_id)
+        params.require(:encounter).permit(:name, :game_id, :state)
       end
   end
 end
