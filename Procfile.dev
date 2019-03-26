@@ -1,0 +1,2 @@
+web: cd client && env PORT=3000 npm start
+api: env PORT=3001 bin/rails server

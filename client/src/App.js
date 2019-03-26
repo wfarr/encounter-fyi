@@ -21,6 +21,7 @@ function App() {
       <Route exact path="/" component={Home} />
       <Route exact path="/games" component={Games} />
       <Route path="/games/:id" component={Game} />
+      <Route component={NotFound} />
     </div>
   );
 }
