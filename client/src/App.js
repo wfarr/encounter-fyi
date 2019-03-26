@@ -1,8 +1,9 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Switch, Link } from 'react-router-dom';
 
 import Games from './components/Games';
 import Game from './components/Game';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -18,10 +19,12 @@ function App() {
 
       <hr />
 
-      <Route exact path="/" component={Home} />
-      <Route exact path="/games" component={Games} />
-      <Route path="/games/:id" component={Game} />
-      <Route component={NotFound} />
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/games" component={Games} />
+        <Route path="/games/:id" component={Game} />
+        <Route component={NotFound} />
+      </Switch>
     </div>
   );
 }
