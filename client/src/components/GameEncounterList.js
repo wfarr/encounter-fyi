@@ -18,6 +18,7 @@ class GameEncounterList extends React.Component {
     this.state.gameId = props.gameId;
 
     this.createGameEncounter = this.createGameEncounter.bind(this);
+    this.deleteGameEncounter = this.deleteGameEncounter.bind(this);
   }
 
   refreshGameEncounters() {
@@ -54,13 +55,23 @@ class GameEncounterList extends React.Component {
       .catch(error => console.log(error));
   }
 
+  deleteGameEncounter(gameId, id) {
+    axios
+      .delete(`/api/v1/games/${gameId}/encounters/${id}`)
+      .then(response => {
+        console.log(response);
+        this.refreshGameEncounters();
+      })
+      .catch(error => console.log(error));
+  }
+
   render() {
     return (
       <div>
         <h2>Game Encounters</h2>
         <ul>
           {this.state.encounters.map(encounter =>
-            encounterLi(this.state.gameId, encounter)
+            encounterLi(this.state.gameId, encounter, this.deleteGameEncounter)
           )}
         </ul>
 
@@ -70,12 +81,16 @@ class GameEncounterList extends React.Component {
   }
 }
 
-function encounterLi(gameId, encounter) {
+function encounterLi(gameId, encounter, deleteEncounterHandler) {
   return (
     <li key={encounter.id}>
       <Link to={{ pathname: `/games/${gameId}/encounters/${encounter.id}` }}>
         {encounter.name}
       </Link>
+
+      <button onClick={() => deleteEncounterHandler(gameId, encounter.id)}>
+        Delete
+      </button>
     </li>
   );
 }
