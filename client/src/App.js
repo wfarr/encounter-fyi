@@ -1,29 +1,27 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 
 import Games from './components/Games';
 import Game from './components/Game';
 
 function App() {
   return (
-    <Router>
-      <div>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/games">Games</Link>
-          </li>
-        </ul>
+    <div>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/games">Games</Link>
+        </li>
+      </ul>
 
-        <hr />
+      <hr />
 
-        <Route exact path="/" component={Home} />
-        <Route exact path="/games" component={Games} />
-        <Route path="/games/:id" component={Game} />
-      </div>
-    </Router>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/games" component={Games} />
+      <Route path="/games/:id" component={Game} />
+    </div>
   );
 }
 

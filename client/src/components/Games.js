@@ -1,8 +1,7 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import GameForm from './GameForm';
-import Game from './Game';
 
 /* TODO: Make this passed in or managed somewhere else, maybe? */
 
@@ -35,7 +34,6 @@ class Games extends React.Component {
         <ul>{this.state.games.map(game => gameLi(game))}</ul>
 
         <GameForm createHandler={this.createGame} />
-        <Route path={`${this.props.match.url}/:id`} component={Game} />
       </div>
     );
   }
