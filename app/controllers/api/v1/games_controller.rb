@@ -2,19 +2,19 @@ module Api::V1
   class GamesController < ApplicationController
     before_action :set_game, only: [:show, :update, :destroy]
 
-    # GET /games
+    # GET /api/v1/games
     def index
       @games = Game.all
 
       render json: @games
     end
 
-    # GET /games/1
+    # GET /api/v1/games/1
     def show
       render json: @game, include: { encounters: {} }
     end
 
-    # POST /games
+    # POST /api/v1/games
     def create
       @game = Game.new(game_params)
 
@@ -25,7 +25,7 @@ module Api::V1
       end
     end
 
-    # PATCH/PUT /games/1
+    # PATCH/PUT /api/v1/games/1
     def update
       if @game.update(game_params)
         render json: @game
@@ -34,7 +34,7 @@ module Api::V1
       end
     end
 
-    # DELETE /games/1
+    # DELETE /api/v1/games/1
     def destroy
       @game.destroy
     end
