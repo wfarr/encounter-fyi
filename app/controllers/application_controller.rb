@@ -1,5 +1,4 @@
-class ApplicationController < ActionController::Base
-  def fallback_index_html
-    render file: "public/index.html"
-  end
+class ApplicationController < ActionController::API
+  include Rails.application.routes.url_helpers
+
 end
