@@ -4,7 +4,11 @@ module Api::V1
 
     # GET /encounters
     def index
-      @encounters = Encounter.all
+      if params[:game_id]
+        @encounters = Encounter.where(game_id: game_id)
+      else
+        @encounters = Encounter.all
+      end
 
       render json: @encounters
     end
