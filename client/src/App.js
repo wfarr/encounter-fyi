@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 import Games from './components/Games';
+import Game from './components/Game';
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <hr />
 
         <Route exact path="/" component={Home} />
-        <Route path="/games" component={Games} />
+        <Route exact path="/games" component={Games} />
+        <Route path="/games/:id" component={Game} />
       </div>
     </Router>
   );

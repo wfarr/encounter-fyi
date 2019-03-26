@@ -1,10 +1,10 @@
 import React from 'react';
+import { Route, Link } from 'react-router-dom';
 
-import GameLi from './Game';
+import GameForm from './GameForm';
+import Game from './Game';
 
-{
-  /* TODO: Make this passed in or managed somewhere else, maybe? */
-}
+/* TODO: Make this passed in or managed somewhere else, maybe? */
 
 class Games extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class Games extends React.Component {
     this.state.games = [
       { id: 1, name: "Storm King's Thunder" },
       { id: 2, name: 'Waterdeep: Dragon Heist' },
-      { id: 3, name: 'Critical Roll' }
+      { id: 3, name: 'Critical Role' }
     ];
 
     this.createGame = this.createGame.bind(this);
@@ -32,22 +32,23 @@ class Games extends React.Component {
     return (
       <div>
         <h2>Games</h2>
-        <ul>
-          {this.state.games.map(game => (
-            <GameLi key={game.id} name={game.name} />
-          ))}
-        </ul>
+        <ul>{this.state.games.map(game => gameLi(game))}</ul>
 
         <GameForm createHandler={this.createGame} />
+        <Route path={`${this.props.match.url}/:id`} component={Game} />
       </div>
     );
   }
 }
 
-class GameLi extends React.Component {
-  render() {
-    return <li>{this.props.name}</li>;
-  }
+function gameLi(game) {
+  return (
+    <li key={game.id}>
+      <Link to={{ pathname: `/games/${game.id}`, state: { game: game } }}>
+        {game.name}
+      </Link>
+    </li>
+  );
 }
 
 export default Games;
