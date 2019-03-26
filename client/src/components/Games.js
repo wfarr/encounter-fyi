@@ -17,6 +17,7 @@ class Games extends React.Component {
     this.state.games = [];
 
     this.createGame = this.createGame.bind(this);
+    this.deleteGame = this.deleteGame.bind(this);
   }
 
   refreshGames() {
@@ -50,11 +51,21 @@ class Games extends React.Component {
       .catch(error => console.log(error));
   }
 
+  deleteGame(gameId) {
+    axios
+      .delete(`/api/v1/games/${gameId}`)
+      .then(response => {
+        console.log(response);
+        this.refreshGames();
+      })
+      .catch(error => console.log(error));
+  }
+
   render() {
     return (
       <div>
         <h2>Games</h2>
-        <ul>{this.state.games.map(game => gameLi(game))}</ul>
+        <ul>{this.state.games.map(game => gameLi(game, this.deleteGame))}</ul>
 
         <GameForm createHandler={this.createGame} />
       </div>
@@ -62,12 +73,13 @@ class Games extends React.Component {
   }
 }
 
-function gameLi(game) {
+function gameLi(game, handleDelete) {
   return (
     <li key={game.id}>
       <Link to={{ pathname: `/games/${game.id}`, state: { game: game } }}>
         {game.name}
       </Link>
+      <button onClick={() => handleDelete(game.id)}>Delete</button>
     </li>
   );
 }
