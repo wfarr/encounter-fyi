@@ -6,12 +6,12 @@ module Api::V1
     def index
       @games = Game.all
 
-      render json: @games
+      render json: @games.include(:encounters)
     end
 
     # GET /games/1
     def show
-      render json: @game
+      render json: @game.include(:encounters)
     end
 
     # POST /games
