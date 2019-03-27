@@ -1,5 +1,7 @@
 import React from 'react';
 
+import CombatantForm from './CombatantForm';
+
 import './Combatants.scss';
 
 const sampleCombatants = {
@@ -15,12 +17,47 @@ class Combatants extends React.Component {
 
     this.handleForward = this.handleForward.bind(this);
     this.handleBack = this.handleBack.bind(this);
+    this.newCombatant = this.newCombatant.bind(this);
 
     this.state = {
       combatants: sampleCombatants,
       order: ['2', '1', '4', '3', '5'],
       currentActor: 0
     };
+  }
+
+  newCombatant(id, name) {
+    console.log('Adding Character:', id, name);
+    console.log(this.state);
+
+    // Empty checks should be pushed into the form, but the dup check probably should happen here?
+    // Or we could pass a validator down into the form.
+    const errors = {};
+    if (id in this.state.combatants) {
+      errors.id = 'Duplicate ID';
+    }
+    if (id === '') {
+      errors.id = 'ID Must not be empty';
+    }
+    if (name === '') {
+      errors.name = 'Name must not be empty';
+    }
+
+    if ('id' in errors || 'name' in errors) {
+      return errors;
+    }
+
+    const combatants = Object.assign(this.state.combatants, {
+      [id]: { id: id, name: name }
+    });
+    const order = [...this.state.order, id];
+
+    this.setState({
+      combatants: combatants,
+      order: order
+    });
+
+    return errors;
   }
 
   currentActor() {
@@ -71,6 +108,9 @@ class Combatants extends React.Component {
         <ul>{combatants}</ul>
         <button onClick={this.handleBack}>{`<`}</button>
         <button onClick={this.handleForward}>{`>`}</button>
+        <div>
+          <CombatantForm createHandler={this.newCombatant} />
+        </div>
       </div>
     );
   }
