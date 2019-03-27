@@ -9,14 +9,30 @@ class Encounter extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log(props);
+    this.updateChildState = this.updateChildState.bind(this);
     this.props = props;
     this.state = {
       loaded: false,
       id: this.props.match.params.id,
       gameId: this.props.match.params.game_id,
-      encounter: {}
+      encounter: {
+        state: {
+          combatants: {}
+        }
+      }
     };
+  }
+
+  componentDidUpdate() {
+    console.log('Storing state', this.state.encounter);
+    axios
+      .patch(`/api/v1/encounters/${this.state.id}`, {
+        encounter: { state: this.state.encounter.state }
+      })
+      .then(response => {
+        console.log('patch response', response);
+      })
+      .catch(error => console.log(error));
   }
 
   componentDidMount() {
@@ -24,11 +40,17 @@ class Encounter extends React.Component {
       axios
         .get(`/api/v1/encounters/${this.state.id}`)
         .then(request => {
-          console.log(request.data);
+          console.log('reloaded state', request.data);
           this.setState({ loaded: true, encounter: request.data });
+          console.log(this.state);
         })
         .catch(error => console.log(error));
     }
+  }
+
+  updateChildState(key, obj) {
+    console.log('Updating state', key, 'with', obj);
+    this.setState({ encounter: { state: { [key]: obj } } });
   }
 
   render() {
@@ -48,7 +70,10 @@ class Encounter extends React.Component {
             <dt>Name</dt>
             <dd>{this.state.encounter.name}</dd>
             <div className="container">
-              <Combatants />
+              <Combatants
+                combatants={this.state.encounter.state.combatants}
+                updateHandler={s => this.updateChildState('combatants', s)}
+              />
             </div>
           </dl>
         </div>

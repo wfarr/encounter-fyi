@@ -4,26 +4,27 @@ import CombatantForm from './CombatantForm';
 
 import './Combatants.scss';
 
-const sampleCombatants = {
-  '1': { id: '1', name: 'Theren' },
-  '2': { id: '2', name: 'Maraby' },
-  '3': { id: '3', name: 'Valanche' },
-  '4': { id: '4', name: 'Anris' },
-  '5': { id: '5', name: 'Margritte' }
-};
 class Combatants extends React.Component {
   constructor(props) {
     super(props);
 
+    console.log('combatants', props);
+    // from parent
+    this.updateHandler = props.updateHandler;
+
     this.handleForward = this.handleForward.bind(this);
     this.handleBack = this.handleBack.bind(this);
+    this.handleStart = this.handleStart.bind(this);
     this.newCombatant = this.newCombatant.bind(this);
 
-    this.state = {
-      combatants: sampleCombatants,
-      order: ['2', '1', '4', '3', '5'],
-      currentActor: 0
-    };
+    this.state = Object.assign(
+      {
+        combatants: {},
+        order: [],
+        current: null
+      },
+      props.combatants
+    );
   }
 
   newCombatant(id, name) {
@@ -52,10 +53,15 @@ class Combatants extends React.Component {
     });
     const order = [...this.state.order, id];
 
-    this.setState({
-      combatants: combatants,
-      order: order
-    });
+    this.setState(
+      {
+        combatants: combatants,
+        order: order
+      },
+      () => {
+        this.updateHandler(this.state);
+      }
+    );
 
     return errors;
   }
@@ -70,9 +76,12 @@ class Combatants extends React.Component {
 
     const newPosition = ((current % len) + len) % len;
 
-    this.setState({
-      currentActor: newPosition
-    });
+    this.setState(
+      {
+        currentActor: newPosition
+      },
+      () => this.updateHandler(this.state)
+    );
   }
 
   handleForward(e) {
@@ -89,6 +98,12 @@ class Combatants extends React.Component {
     this.advanceTurn(-1);
 
     e.preventDefault();
+  }
+
+  handleStart(e) {
+    console.log(e);
+
+    this.setState({ currentActor: 0 }, () => this.updateHandler(this.state));
   }
 
   render() {
@@ -108,6 +123,7 @@ class Combatants extends React.Component {
         <ul>{combatants}</ul>
         <button onClick={this.handleBack}>{`<`}</button>
         <button onClick={this.handleForward}>{`>`}</button>
+        <button onClick={this.handleStart}>Start</button>
         <div>
           <CombatantForm createHandler={this.newCombatant} />
         </div>
