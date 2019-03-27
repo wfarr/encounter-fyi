@@ -1,6 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 
+import Combatants from './Combatants';
+
+import './Encounter.scss';
+
 class Encounter extends React.Component {
   constructor(props) {
     super(props);
@@ -43,6 +47,9 @@ class Encounter extends React.Component {
             <dd>{this.state.id}</dd>
             <dt>Name</dt>
             <dd>{this.state.encounter.name}</dd>
+            <div className="container">
+              <Combatants />
+            </div>
           </dl>
         </div>
       );
