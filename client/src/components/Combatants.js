@@ -28,8 +28,13 @@ class Combatants extends React.Component {
   }
 
   advanceTurn(count) {
+    var current = this.state.currentActor + count;
+    const len = this.state.order.length;
+
+    const newPosition = ((current % len) + len) % len;
+
     this.setState({
-      currentActor: (this.state.currentActor + count) % this.state.order.length
+      currentActor: newPosition
     });
   }
 
