@@ -1,3 +1,15 @@
 .active {
   background-color: #ff0000;
 }
+
+.combatants {
+  display: flex;
+  flex-grow: 1;
+  background-color: #ffcccc;
+
+  flex-direction: column;
+
+  li {
+    flex-grow: 1;
+  }
+}

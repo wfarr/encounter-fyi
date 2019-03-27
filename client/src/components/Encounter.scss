@@ -2,15 +2,3 @@
   display: flex;
   flex-direction: row;
 }
-
-.combatants {
-  display: flex;
-  flex-grow: 1;
-  background-color: #ffcccc;
-
-  flex-direction: column;
-
-  li {
-    flex-grow: 1;
-  }
-}
