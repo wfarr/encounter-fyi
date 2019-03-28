@@ -3,10 +3,6 @@ import React from 'react';
 import './Combatants.scss';
 
 class Combatants extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   currentActor() {
     return this.props.combatants[this.props.order[this.props.currentActor]];
   }
@@ -19,7 +15,7 @@ class Combatants extends React.Component {
         <Combatant
           key={combatant.id}
           combatant={combatant}
-          active={this.props.currentActor == index}
+          active={this.props.currentActor === index}
         />
       );
     });

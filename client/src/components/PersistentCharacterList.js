@@ -5,10 +5,6 @@ import PersistentCharacterForm from './PersistentCharacterForm';
 
 import axios from 'axios';
 
-{
-  /* TODO: Make this passed in or managed somewhere else, maybe? */
-}
-
 class PersistentCharacterList extends React.Component {
   constructor(props) {
     super(props);

@@ -5,10 +5,6 @@ import GameEncounterForm from './GameEncounterForm';
 
 import axios from 'axios';
 
-{
-  /* TODO: Make this passed in or managed somewhere else, maybe? */
-}
-
 class GameEncounterList extends React.Component {
   constructor(props) {
     super(props);

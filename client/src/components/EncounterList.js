@@ -5,10 +5,6 @@ import EncounterForm from './EncounterForm';
 
 import axios from 'axios';
 
-{
-  /* TODO: Make this passed in or managed somewhere else, maybe? */
-}
-
 class EncounterList extends React.Component {
   constructor(props) {
     super(props);
@@ -54,7 +50,9 @@ class EncounterList extends React.Component {
     return (
       <div>
         <h2>Encounters</h2>
-        <ul>{this.state.encounters.map(encounter => encounterLi(encounter))}</ul>
+        <ul>
+          {this.state.encounters.map(encounter => encounterLi(encounter))}
+        </ul>
 
         <EncounterForm createHandler={this.createEncounter} />
       </div>
@@ -65,7 +63,12 @@ class EncounterList extends React.Component {
 function encounterLi(encounter) {
   return (
     <li key={encounter.id}>
-      <Link to={{ pathname: `/encounters/${encounter.id}`, state: { encounter: encounter } }}>
+      <Link
+        to={{
+          pathname: `/encounters/${encounter.id}`,
+          state: { encounter: encounter }
+        }}
+      >
         {encounter.name}
       </Link>
     </li>
