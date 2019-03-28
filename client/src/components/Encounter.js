@@ -4,6 +4,8 @@ import axios from 'axios';
 import Combatants from './Combatants';
 import CombatantForm from './CombatantForm';
 
+import PersistentCharacterList from './PersistentCharacterList';
+
 import './Encounter.scss';
 
 class Encounter extends React.Component {
@@ -57,9 +59,8 @@ class Encounter extends React.Component {
     this.setState({ encounter: { state: { [key]: obj } } });
   }
 
-  newCombatant(id, name) {
-    console.log('Adding Character:', id, name);
-    console.log(this.state);
+  newCombatant(character) {
+    const { id, name } = character;
 
     // Empty checks should be pushed into the form, but the dup check probably should happen here?
     // Or we could pass a validator down into the form.
@@ -138,17 +139,25 @@ class Encounter extends React.Component {
             <dt>Name</dt>
             <dd>{this.state.name}</dd>
             <div className="container">
-              <Combatants
-                combatants={this.state.combatants}
-                order={this.state.order}
-                currentActor={this.state.currentActor}
-              />
-              <div>
-                <button onClick={this.handleBack}>{`<`}</button>
-                <button onClick={this.handleForward}>{`>`}</button>
-                <button onClick={this.handleStart}>Start</button>
+              <div className="libraryArea">
+                <PersistentCharacterList
+                  hideForm={true}
+                  addToEncounter={this.newCombatant}
+                />
+              </div>
+              <div className="combatArea">
+                <Combatants
+                  combatants={this.state.combatants}
+                  order={this.state.order}
+                  currentActor={this.state.currentActor}
+                />
                 <div>
-                  <CombatantForm createHandler={this.newCombatant} />
+                  <button onClick={this.handleBack}>{`<`}</button>
+                  <button onClick={this.handleForward}>{`>`}</button>
+                  <button onClick={this.handleStart}>Start</button>
+                  <div>
+                    <CombatantForm createHandler={this.newCombatant} />
+                  </div>
                 </div>
               </div>
             </div>

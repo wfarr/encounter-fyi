@@ -1,4 +1,15 @@
 .container {
   display: flex;
+  flex-direction: row;
+}
+
+.combatArea {
   flex-direction: column;
+  flex-grow: 3;
+}
+
+.libraryArea {
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
 }

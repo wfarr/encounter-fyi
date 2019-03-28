@@ -22,7 +22,7 @@ class CombatantForm extends React.Component {
   handleSubmit(event) {
     const error = Object.assign(
       {},
-      this.createHandler(this.state.id, this.state.name)
+      this.createHandler({ id: this.state.id, name: this.state.name })
     );
 
     this.setState({ errors: error });

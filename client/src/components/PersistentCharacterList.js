@@ -68,14 +68,17 @@ class PersistentCharacterList extends React.Component {
           {this.state.persistentCharacters.map(persistentCharacter =>
             persistentCharacterLi(
               persistentCharacter,
-              this.deletePersistentCharacter
+              this.deletePersistentCharacter,
+              this.props.addToEncounter
             )
           )}
         </ul>
 
-        <PersistentCharacterForm
-          createHandler={this.createPersistentCharacter}
-        />
+        {!this.props.hideForm ? (
+          <PersistentCharacterForm
+            createHandler={this.createPersistentCharacter}
+          />
+        ) : null}
       </div>
     );
   }
@@ -83,8 +86,10 @@ class PersistentCharacterList extends React.Component {
 
 function persistentCharacterLi(
   persistentCharacter,
-  deletePersistentCharacterHandler
+  deletePersistentCharacterHandler,
+  addToEncounter
 ) {
+  console.log(addToEncounter);
   return (
     <li key={persistentCharacter.id}>
       <Link
@@ -101,6 +106,9 @@ function persistentCharacterLi(
       >
         Delete
       </button>
+      {addToEncounter ? (
+        <button onClick={() => addToEncounter(persistentCharacter)}>Add</button>
+      ) : null}
     </li>
   );
 }
