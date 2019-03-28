@@ -15,7 +15,7 @@ class Encounter extends React.Component {
     this.handleForward = this.handleForward.bind(this);
     this.handleBack = this.handleBack.bind(this);
     this.handleStart = this.handleStart.bind(this);
-    this.newCombatant = this.newCombatant.bind(this);
+    this.addCombatant = this.addCombatant.bind(this);
 
     this.updateChildState = this.updateChildState.bind(this);
     this.props = props;
@@ -59,7 +59,7 @@ class Encounter extends React.Component {
     this.setState({ encounter: { state: { [key]: obj } } });
   }
 
-  newCombatant(character) {
+  addCombatant(character) {
     const { id, name } = character;
 
     // Empty checks should be pushed into the form, but the dup check probably should happen here?
@@ -80,7 +80,7 @@ class Encounter extends React.Component {
     }
 
     const combatants = Object.assign(this.state.combatants, {
-      [id]: { id: id, name: name }
+      [id]: character
     });
     const order = [...this.state.order, id];
 
@@ -93,6 +93,9 @@ class Encounter extends React.Component {
   }
 
   advanceTurn(count) {
+    if (this.state.currentActor === null) {
+      return;
+    }
     var current = this.state.currentActor + count;
     const len = this.state.order.length;
 
@@ -142,7 +145,7 @@ class Encounter extends React.Component {
               <div className="libraryArea">
                 <PersistentCharacterList
                   hideForm={true}
-                  addToEncounter={this.newCombatant}
+                  addToEncounter={this.addCombatant}
                 />
               </div>
               <div className="combatArea">
@@ -156,7 +159,7 @@ class Encounter extends React.Component {
                   <button onClick={this.handleForward}>{`>`}</button>
                   <button onClick={this.handleStart}>Start</button>
                   <div>
-                    <CombatantForm createHandler={this.newCombatant} />
+                    <CombatantForm createHandler={this.addCombatant} />
                   </div>
                 </div>
               </div>
