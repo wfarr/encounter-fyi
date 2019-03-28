@@ -158,7 +158,7 @@ class PersistentCharacterForm extends React.Component {
           </div>
         </div>
 
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary btn-md">
           Create Character
         </button>
       </form>
