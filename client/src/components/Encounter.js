@@ -22,7 +22,7 @@ class Encounter extends React.Component {
       id: this.props.match.params.id,
       game_id: this.props.match.params.game_id,
       combatants: {},
-      currentActor: 0,
+      currentActor: null,
       order: []
     };
   }
