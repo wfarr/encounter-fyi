@@ -54,6 +54,8 @@ class PersistentCharacter extends React.Component {
 
           <PersistentCharacterForm
             name={this.state.persistentCharacter.name}
+            hit_points={this.state.persistentCharacter.hit_points}
+            hit_point_maximum={this.state.persistentCharacter.hit_point_maximum}
             strength={this.state.persistentCharacter.strength}
             dexterity={this.state.persistentCharacter.dexterity}
             constitution={this.state.persistentCharacter.constitution}
