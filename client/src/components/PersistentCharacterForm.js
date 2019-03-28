@@ -4,19 +4,22 @@ class PersistentCharacterForm extends React.Component {
   constructor(props) {
     super(props);
 
+    console.log(props);
+
     this.state = {
-      name: '',
-      strength: 1,
-      dexterity: 1,
-      constitution: 1,
-      intelligence: 1,
-      wisdom: 1,
-      charisma: 1,
-      hit_point_maximum: 1,
-      hit_points: 0
+      name: props.name || '',
+      strength: props.strength || 1,
+      dexterity: props.dexterity || 1,
+      constitution: props.constitution || 1,
+      intelligence: props.intelligence || 1,
+      wisdom: props.wisdom || 1,
+      charisma: props.charisma || 1,
+      hit_point_maximum: props.hit_point_maximum || 1,
+      hit_points: props.hit_points || 0
     };
 
     this.createHandler = props.createHandler;
+    this.updateHandler = props.updateHandler;
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -33,11 +36,17 @@ class PersistentCharacterForm extends React.Component {
   }
 
   handleSubmit(event) {
-    this.createHandler(this.state);
+    if (this.createHandler) {
+      this.createHandler(this.state);
+    } else if (this.updateHandler) {
+      this.updateHandler(this.state);
+    }
     event.preventDefault();
   }
 
   render() {
+    console.log(this.state);
+
     return (
       <form onSubmit={this.handleSubmit}>
         {/* name, hp, max hp */}
@@ -159,7 +168,7 @@ class PersistentCharacterForm extends React.Component {
         </div>
 
         <button type="submit" className="btn btn-primary btn-md">
-          Create Character
+          {this.createHandler ? 'Create' : 'Update'} Character
         </button>
       </form>
     );
