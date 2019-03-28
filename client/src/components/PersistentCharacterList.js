@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import PageTitle from './PageTitle';
+
 import PersistentCharacterForm from './PersistentCharacterForm';
 
 import axios from 'axios';
@@ -63,7 +65,7 @@ class PersistentCharacterList extends React.Component {
   render() {
     return (
       <div>
-        <h2>PersistentCharacters</h2>
+        <PageTitle title="Characters" />
         <ul>
           {this.state.persistentCharacters.map(persistentCharacter =>
             persistentCharacterLi(

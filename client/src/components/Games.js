@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import PageTitle from './PageTitle';
+
 import GameForm from './GameForm';
 
 import axios from 'axios';
@@ -60,7 +62,7 @@ class Games extends React.Component {
   render() {
     return (
       <div>
-        <h2>Games</h2>
+        <PageTitle title="Games" />
         <ul>{this.state.games.map(game => gameLi(game, this.deleteGame))}</ul>
 
         <GameForm createHandler={this.createGame} />
