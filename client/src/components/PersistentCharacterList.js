@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import PageTitle from './PageTitle';
+
 import PersistentCharacterForm from './PersistentCharacterForm';
 
 import axios from 'axios';
@@ -63,16 +65,31 @@ class PersistentCharacterList extends React.Component {
   render() {
     return (
       <div>
-        <h2>PersistentCharacters</h2>
-        <ul>
-          {this.state.persistentCharacters.map(persistentCharacter =>
-            persistentCharacterLi(
-              persistentCharacter,
-              this.deletePersistentCharacter
-            )
-          )}
-        </ul>
+        <PageTitle title="Characters" />
 
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col" className="col-md-4">
+                Name
+              </th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.persistentCharacters.map(persistentCharacter =>
+              persistentCharacterTableRow(
+                persistentCharacter,
+                this.deletePersistentCharacter
+              )
+            )}
+          </tbody>
+        </table>
+
+        <hr />
+
+        <h4>Create a Character</h4>
         <PersistentCharacterForm
           createHandler={this.createPersistentCharacter}
         />
@@ -81,27 +98,29 @@ class PersistentCharacterList extends React.Component {
   }
 }
 
-function persistentCharacterLi(
-  persistentCharacter,
-  deletePersistentCharacterHandler
-) {
+function persistentCharacterTableRow(pc, deletePersistentCharacterHandler) {
   return (
-    <li key={persistentCharacter.id}>
-      <Link
-        to={{
-          pathname: `/persistent_characters/${persistentCharacter.id}`,
-          state: { persistentCharacter: persistentCharacter }
-        }}
-      >
-        {persistentCharacter.name}
-      </Link>
-
-      <button
-        onClick={() => deletePersistentCharacterHandler(persistentCharacter.id)}
-      >
-        Delete
-      </button>
-    </li>
+    <tr key={pc.id}>
+      <th scope="row">{pc.id}</th>
+      <td>
+        <Link
+          to={{
+            pathname: `/persistent_characters/${pc.id}`,
+            state: { persistentCharacter: pc }
+          }}
+        >
+          {pc.name}
+        </Link>
+      </td>
+      <td>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => deletePersistentCharacterHandler(pc.id)}
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
   );
 }
 

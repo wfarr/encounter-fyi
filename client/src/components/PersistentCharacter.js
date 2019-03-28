@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 
+import PageTitle from './PageTitle';
+import PersistentCharacterForm from './PersistentCharacterForm';
+
 class PersistentCharacter extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +15,8 @@ class PersistentCharacter extends React.Component {
       id: this.props.match.params.id,
       persistentCharacter: {}
     };
+
+    this.updatePersistentCharacter = this.updatePersistentCharacter.bind(this);
   }
 
   componentDidMount() {
@@ -26,27 +31,39 @@ class PersistentCharacter extends React.Component {
     }
   }
 
+  updatePersistentCharacter(params) {
+    console.log(params);
+    axios
+      .put(`/api/v1/persistent_characters/${this.state.id}`, params)
+      .then(response => {
+        console.log(response);
+
+        const persistentCharacter = response.data;
+        this.setState({
+          persistentCharacter: persistentCharacter
+        });
+      })
+      .catch(error => console.log(error));
+  }
+
   render() {
     if (this.state.loaded) {
       return (
         <div>
-          <h1>PERSISTENT CHARACTER DETAIL</h1>
-          <dl>
-            <dt>Name</dt>
-            <dd>{this.state.persistentCharacter.name}</dd>
-            <dt>Strength</dt>
-            <dd>{this.state.persistentCharacter.strength}</dd>
-            <dt>Dexterity</dt>
-            <dd>{this.state.persistentCharacter.dexterity}</dd>
-            <dt>Constitution</dt>
-            <dd>{this.state.persistentCharacter.constitution}</dd>
-            <dt>Intelligence</dt>
-            <dd>{this.state.persistentCharacter.intelligence}</dd>
-            <dt>Wisdom</dt>
-            <dd>{this.state.persistentCharacter.wisdom}</dd>
-            <dt>Charisma</dt>
-            <dd>{this.state.persistentCharacter.charisma}</dd>
-          </dl>
+          <PageTitle title="Character View" />
+
+          <PersistentCharacterForm
+            name={this.state.persistentCharacter.name}
+            hit_points={this.state.persistentCharacter.hit_points}
+            hit_point_maximum={this.state.persistentCharacter.hit_point_maximum}
+            strength={this.state.persistentCharacter.strength}
+            dexterity={this.state.persistentCharacter.dexterity}
+            constitution={this.state.persistentCharacter.constitution}
+            intelligence={this.state.persistentCharacter.intelligence}
+            wisdom={this.state.persistentCharacter.wisdom}
+            charisma={this.state.persistentCharacter.charisma}
+            updateHandler={this.updatePersistentCharacter}
+          />
         </div>
       );
     } else {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import PageTitle from './PageTitle';
 import EncounterForm from './EncounterForm';
 
 import axios from 'axios';
@@ -49,7 +50,7 @@ class EncounterList extends React.Component {
   render() {
     return (
       <div>
-        <h2>Encounters</h2>
+        <PageTitle title="Encounters" />
         <ul>
           {this.state.encounters.map(encounter => encounterLi(encounter))}
         </ul>
