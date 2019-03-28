@@ -5,10 +5,6 @@ import GameForm from './GameForm';
 
 import axios from 'axios';
 
-{
-  /* TODO: Make this passed in or managed somewhere else, maybe? */
-}
-
 class Games extends React.Component {
   constructor(props) {
     super(props);
