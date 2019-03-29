@@ -63,22 +63,56 @@ class Games extends React.Component {
     return (
       <div>
         <PageTitle title="Games" />
-        <ul>{this.state.games.map(game => gameLi(game, this.deleteGame))}</ul>
 
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col" className="col-md-4">
+                Name
+              </th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {this.state.games.map(game => gameTableRow(game, this.deleteGame))}
+          </tbody>
+        </table>
+
+        <hr />
+
+        <h4>Create a Game</h4>
         <GameForm createHandler={this.createGame} />
       </div>
     );
   }
 }
 
-function gameLi(game, handleDelete) {
+function gameTableRow(game, handleDelete) {
   return (
-    <li key={game.id}>
-      <Link to={{ pathname: `/games/${game.id}`, state: { game: game } }}>
-        {game.name} -- {game.encounters_count} encounters
-      </Link>
-      <button onClick={() => handleDelete(game.id)}>Delete</button>
-    </li>
+    <tr key={game.id}>
+      <td>
+        <Link to={{ pathname: `/games/${game.id}`, state: { game: game } }}>
+          {game.id}
+        </Link>
+      </td>
+
+      <td>
+        <Link to={{ pathname: `/games/${game.id}`, state: { game: game } }}>
+          {game.name}
+        </Link>
+      </td>
+
+      <td>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleDelete(game.id)}
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
   );
 }
 
