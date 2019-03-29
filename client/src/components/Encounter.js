@@ -135,14 +135,14 @@ class Encounter extends React.Component {
   render() {
     if (this.state.loaded) {
       return (
-        <div>
+        <div className="container-fluid">
           <PageTitle title={`Encounter ${this.state.name}`} />
 
           <div className="row">
-            <div className="col-sm-2">
+            <div className="col-sm">
               <CharacterLibrary addCharacterHandler={this.newCombatant} />
             </div>
-            <div className="col-sm-10">
+            <div className="col-sm">
               <Combatants
                 combatants={this.state.combatants}
                 order={this.state.order}

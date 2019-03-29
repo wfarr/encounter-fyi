@@ -21,18 +21,35 @@ class Combatants extends React.Component {
     });
 
     return (
-      <div className="combatants" onKeyDown={this.handleKeyDown}>
-        <ul>{combatants}</ul>
-      </div>
+      <table className="table" onKeyDown={this.handleKeyDown}>
+        <thead>
+          <tr>
+            <th scope="col">Initiative</th>
+            <th scope="col" className="col-md-10">
+              Name
+            </th>
+          </tr>
+        </thead>
+        <tbody>{combatants}</tbody>
+      </table>
     );
   }
 }
 
 function Combatant(props) {
+  console.log('Render a combatant', props);
   return (
-    <li className={props.active ? 'active' : 'inactive'}>
-      {props.combatant.name}
-    </li>
+    <tr
+      key={props.combatant.id}
+      className={props.active ? 'active' : 'inactive'}
+    >
+      <th scope="row">
+        {props.combatant.initiative !== undefined
+          ? props.combatant.initiative
+          : 'N/A'}
+      </th>
+      <td>{props.combatant.name}</td>
+    </tr>
   );
 }
 
