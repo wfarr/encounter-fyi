@@ -61,45 +61,70 @@ class CharacterLibrary extends React.Component {
 
   render() {
     return (
-      <div>
-        <PageTitle title="Characters" />
-
-        <table className="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col" className="col-md-4">
-                Name
-              </th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.persistentCharacters.map(persistentCharacter =>
-              persistentCharacterTableRow(
-                persistentCharacter,
-                this.props.addCharacterHandler
-              )
-            )}
-          </tbody>
-        </table>
-      </div>
+      <table className="table">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col" className="col-md-4">
+              Name
+            </th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.persistentCharacters.map(persistentCharacter => (
+            <CharacterLibraryRow
+              pc={persistentCharacter}
+              addCharacterHandler={this.props.addCharacterHandler}
+            />
+          ))}
+        </tbody>
+      </table>
     );
   }
 }
 
-function persistentCharacterTableRow(pc, addHandler) {
-  return (
-    <tr key={pc.id}>
-      <th scope="row">{pc.id}</th>
-      <td>{pc.name}</td>
-      <td>
-        <button className="btn btn-info btn-sm" onClick={() => addHandler(pc)}>
-          Add
-        </button>
-      </td>
-    </tr>
-  );
+class CharacterLibraryRow extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { initiative: 0 };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ initiative: event.target.value });
+  }
+
+  handleSubmit(event) {
+    const pc = { ...this.props.pc, initiative: this.state.initiative };
+    console.log('Adding!', pc);
+    this.props.addCharacterHandler(pc);
+  }
+
+  render() {
+    return (
+      <tr key={this.props.pc.id}>
+        <th scope="row">{this.props.pc.id}</th>
+        <td>{this.props.pc.name}</td>
+        <td>
+          <input
+            type="number"
+            name="initiative"
+            onChange={this.handleChange}
+            value={this.state.initiative}
+          />
+        </td>
+        <td>
+          <button className="btn btn-info btn-sm" onClick={this.handleSubmit}>
+            Add
+          </button>
+        </td>
+      </tr>
+    );
+  }
 }
 
 export default CharacterLibrary;
