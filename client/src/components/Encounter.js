@@ -6,6 +6,8 @@ import PageTitle from './PageTitle';
 import Combatants from './Combatants';
 import CombatantForm from './CombatantForm';
 
+import CharacterLibrary from './CharacterLibrary';
+
 import './Encounter.scss';
 
 class Encounter extends React.Component {
@@ -64,7 +66,8 @@ class Encounter extends React.Component {
     this.setState({ encounter: { state: { [key]: obj } } });
   }
 
-  newCombatant(id, name) {
+  newCombatant(combatant) {
+    const { id, name } = combatant;
     console.log('Adding Character:', id, name);
     console.log(this.state);
 
@@ -86,7 +89,7 @@ class Encounter extends React.Component {
     }
 
     const combatants = Object.assign(this.state.combatants, {
-      [id]: { id: id, name: name }
+      [id]: combatant
     });
     const order = [...this.state.order, id];
 
@@ -135,33 +138,35 @@ class Encounter extends React.Component {
         <div>
           <PageTitle title={`Encounter ${this.state.name}`} />
 
-          <div className="container">
-            <Combatants
-              combatants={this.state.combatants}
-              order={this.state.order}
-              currentActor={this.state.currentActor}
-            />
-
-            <div className="btn-toolbar" role="toolbar">
-              <div className="btn-group" role="group">
-                <button
-                  className="btn btn-secondary"
-                  onClick={this.handleBack}
-                >{`<`}</button>
-                <button
-                  className="btn btn-secondary"
-                  onClick={this.handleForward}
-                >{`>`}</button>
-                <button
-                  className="btn btn-secondary"
-                  onClick={this.handleStart}
-                >
-                  Start
-                </button>
-              </div>
+          <div className="row">
+            <div className="col-sm-2">
+              <CharacterLibrary addCharacterHandler={this.newCombatant} />
             </div>
-            <div>
-              <CombatantForm createHandler={this.newCombatant} />
+            <div className="col-sm-10">
+              <Combatants
+                combatants={this.state.combatants}
+                order={this.state.order}
+                currentActor={this.state.currentActor}
+              />
+
+              <div className="btn-toolbar" role="toolbar">
+                <div className="btn-group" role="group">
+                  <button
+                    className="btn btn-secondary"
+                    onClick={this.handleBack}
+                  >{`<`}</button>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={this.handleForward}
+                  >{`>`}</button>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={this.handleStart}
+                  >
+                    Start
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
