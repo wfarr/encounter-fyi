@@ -29,7 +29,7 @@ rand(10).times do |i|
   Encounter.create(
     name: "random encounter #{i * (i + 1)}",
     state: {
-      combatants: Hash[*(encounter_characters.map {|c| [c.id, c] }).flatten],
+      combatants: Hash[*(encounter_characters.map {|c| [c.id, c.as_json.merge(initiative: rand(20) + 1)] }).flatten],
       order: ordering,
       currentActor: rand(ordering.size),
     }
@@ -44,7 +44,7 @@ games.each do |g|
     g.encounters.create(
       name: "random encounter #{i}",
       state: {
-        combatants: Hash[*(encounter_characters.map {|c| [c.id, c] }).flatten],
+        combatants: Hash[*(encounter_characters.map {|c| [c.id, c.as_json.merge(initiative: rand(20) + 1)] }).flatten],
         order: ordering,
         currentActor: rand(ordering.size),
       }
