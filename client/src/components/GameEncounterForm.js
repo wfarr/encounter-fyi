@@ -24,16 +24,26 @@ class GameEncounterForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <label>
-          Name:
-          <input
-            type="text"
-            name="name"
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
-        </label>
-        <input type="submit" />
+        <div className="row">
+          <div className="form-group col-md-4">
+            <label htmlFor="name">Name</label>
+            <input
+              className="form-control"
+              type="text"
+              name="name"
+              value={this.state.value}
+              onChange={this.handleChange}
+            />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="form-group col-md-4">
+            <button type="submit" className="btn btn-primary btn-md">
+              Add Encounter
+            </button>
+          </div>
+        </div>
       </form>
     );
   }
