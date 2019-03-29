@@ -1,5 +1,7 @@
 import React from 'react';
+import axios from 'axios';
 import { Route, Switch, Link } from 'react-router-dom';
+import TimeAgo from 'react-timeago';
 
 import PageTitle from './components/PageTitle';
 
@@ -94,8 +96,160 @@ function SideBar() {
   );
 }
 
-function Home() {
-  return <PageTitle title="Home" />;
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.recentCharactersHandler = this.recentCharactersHandler.bind(this);
+    this.recentEncountersHandler = this.recentEncountersHandler.bind(this);
+    this.recentGamesHandler = this.recentGamesHandler.bind(this);
+
+    this.state = {
+      loaded: false,
+      home: {
+        recent_characters: [],
+        recent_encounters: [],
+        recent_games: []
+      }
+    };
+  }
+
+  componentDidMount() {
+    axios
+      .get('/api/v1/home')
+      .then(response => {
+        console.log('before state', this.state);
+        this.setState({
+          home: response.data
+        });
+        console.log('after state', this.state);
+      })
+      .catch(error => console.log(error));
+  }
+
+  recentEncountersHandler() {
+    const encounterTableRow = encounter => {
+      return (
+        <tr>
+          <td>
+            <Link to={`/encounters/${encounter.id}`}>{encounter.name}</Link>
+          </td>
+          <td>
+            <TimeAgo date={encounter.created_at} />
+          </td>
+        </tr>
+      );
+    };
+
+    return (
+      <table className="table">
+        <tbody>
+          {this.state.home.recent_encounters.map(encounter =>
+            encounterTableRow(encounter)
+          )}
+        </tbody>
+      </table>
+    );
+  }
+
+  recentCharactersHandler() {
+    const characterTableRow = character => {
+      return (
+        <tr key={`character-${character.id}`}>
+          <td>
+            <Link to={`/characters/${character.id}`}>{character.name}</Link>
+          </td>
+          <td>
+            <TimeAgo date={character.created_at} />
+          </td>
+        </tr>
+      );
+    };
+
+    return (
+      <table className="table">
+        <tbody>
+          {this.state.home.recent_characters.map(character =>
+            characterTableRow(character)
+          )}
+        </tbody>
+      </table>
+    );
+  }
+
+  recentGamesHandler() {
+    const gameTableRow = game => {
+      return (
+        <tr key={`game-${game.id}`}>
+          <td>
+            <Link to={`/games/${game.id}`}>{game.name}</Link>
+          </td>
+          <td>
+            <TimeAgo date={game.created_at} />
+          </td>
+        </tr>
+      );
+    };
+
+    return (
+      <table className="table">
+        <tbody>
+          {this.state.home.recent_games.map(game => gameTableRow(game))}
+        </tbody>
+      </table>
+    );
+  }
+
+  card(title, contentHandler, link, linkName) {
+    return (
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{title}</h5>
+          <p class="card-text">{contentHandler()}</p>
+          <Link className="btn btn-primary" to={link}>
+            {linkName}
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div>
+        <PageTitle title="Home" />
+
+        <div class="row">
+          <div class="col-sm-4">
+            {this.card(
+              'Recent Games',
+              this.recentGamesHandler,
+              '/games',
+              'More Games...'
+            )}
+          </div>
+
+          <div class="col-sm-4">
+            {this.card(
+              'Recent Encounters',
+              this.recentEncountersHandler,
+              '/encounters',
+              'More Encounters...'
+            )}
+          </div>
+
+          <div class="col-sm-4">
+            {this.card(
+              'Recent Characters',
+              this.recentCharactersHandler,
+              '/characters',
+              'More Characters...'
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
