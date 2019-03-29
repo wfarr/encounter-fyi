@@ -65,7 +65,8 @@ class GameEncounterList extends React.Component {
     return (
       <div>
         <h4>Encounters</h4>
-        <table className="table table-striped">
+
+        <table className="table table-hover">
           <thead>
             <tr>
               <th scope="col" className="col-md-4">
