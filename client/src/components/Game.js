@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
+import PageTitle from './PageTitle';
 import GameEncounterList from './GameEncounterList';
 
 class Game extends React.Component {
@@ -32,9 +33,8 @@ class Game extends React.Component {
     if (this.state.loaded) {
       return (
         <div>
-          <h1>GAME DETAIL</h1>
-          <h2>{this.props.match.params.id}</h2>
-          <h2>{this.state.game.name}</h2>
+          <PageTitle title={`${this.state.game.name}`} />
+
           <GameEncounterList
             gameId={this.state.id}
             encounters={this.state.game.encounters}

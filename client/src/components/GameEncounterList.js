@@ -64,12 +64,28 @@ class GameEncounterList extends React.Component {
   render() {
     return (
       <div>
-        <h2>Game Encounters</h2>
-        <ul>
-          {this.state.encounters.map(encounter =>
-            encounterLi(this.state.gameId, encounter, this.deleteGameEncounter)
-          )}
-        </ul>
+        <h4>Encounters</h4>
+
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col" className="col-md-4">
+                Name
+              </th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {this.state.encounters.map(encounter =>
+              encounterTableRow(
+                this.state.gameId,
+                encounter,
+                this.deleteGameEncounter
+              )
+            )}
+          </tbody>
+        </table>
 
         <GameEncounterForm createHandler={this.createGameEncounter} />
       </div>
@@ -77,17 +93,24 @@ class GameEncounterList extends React.Component {
   }
 }
 
-function encounterLi(gameId, encounter, deleteEncounterHandler) {
+function encounterTableRow(gameId, encounter, deleteEncounterHandler) {
   return (
-    <li key={encounter.id}>
-      <Link to={{ pathname: `/games/${gameId}/encounters/${encounter.id}` }}>
-        {encounter.name}
-      </Link>
+    <tr key={encounter.id}>
+      <th scope="row">
+        <Link to={{ pathname: `/games/${gameId}/encounters/${encounter.id}` }}>
+          {encounter.name}
+        </Link>
+      </th>
 
-      <button onClick={() => deleteEncounterHandler(gameId, encounter.id)}>
-        Delete
-      </button>
-    </li>
+      <td>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => deleteEncounterHandler(gameId, encounter.id)}
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
   );
 }
 

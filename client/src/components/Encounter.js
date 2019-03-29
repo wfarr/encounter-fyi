@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import PageTitle from './PageTitle';
+
 import Combatants from './Combatants';
 import CombatantForm from './CombatantForm';
 
@@ -21,6 +23,7 @@ class Encounter extends React.Component {
       loaded: false,
       id: this.props.match.params.id,
       game_id: this.props.match.params.game_id,
+      name: this.props.name || '',
       combatants: {},
       currentActor: null,
       order: []
@@ -45,7 +48,11 @@ class Encounter extends React.Component {
         .get(`/api/v1/encounters/${this.state.id}`)
         .then(request => {
           console.log('reloaded state', request.data);
-          this.setState({ ...request.data.state, loaded: true });
+          this.setState({
+            ...request.data.state,
+            loaded: true,
+            name: request.data.name
+          });
           console.log('final state', this.state);
         })
         .catch(error => console.log(error));
@@ -126,33 +133,37 @@ class Encounter extends React.Component {
     if (this.state.loaded) {
       return (
         <div>
-          <dl>
-            {this.state.game_id ? (
-              <div>
-                <dt>Game ID:</dt>
-                <dd>{this.state.game_id}</dd>
-              </div>
-            ) : null}
-            <dt>Encounter ID:</dt>
-            <dd>{this.state.id}</dd>
-            <dt>Name</dt>
-            <dd>{this.state.name}</dd>
-            <div className="container">
-              <Combatants
-                combatants={this.state.combatants}
-                order={this.state.order}
-                currentActor={this.state.currentActor}
-              />
-              <div>
-                <button onClick={this.handleBack}>{`<`}</button>
-                <button onClick={this.handleForward}>{`>`}</button>
-                <button onClick={this.handleStart}>Start</button>
-                <div>
-                  <CombatantForm createHandler={this.newCombatant} />
-                </div>
+          <PageTitle title={`Encounter ${this.state.name}`} />
+
+          <div className="container">
+            <Combatants
+              combatants={this.state.combatants}
+              order={this.state.order}
+              currentActor={this.state.currentActor}
+            />
+
+            <div className="btn-toolbar" role="toolbar">
+              <div className="btn-group" role="group">
+                <button
+                  className="btn btn-secondary"
+                  onClick={this.handleBack}
+                >{`<`}</button>
+                <button
+                  className="btn btn-secondary"
+                  onClick={this.handleForward}
+                >{`>`}</button>
+                <button
+                  className="btn btn-secondary"
+                  onClick={this.handleStart}
+                >
+                  Start
+                </button>
               </div>
             </div>
-          </dl>
+            <div>
+              <CombatantForm createHandler={this.newCombatant} />
+            </div>
+          </div>
         </div>
       );
     } else {

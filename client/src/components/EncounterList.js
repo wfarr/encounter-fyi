@@ -14,6 +14,7 @@ class EncounterList extends React.Component {
     this.state.encounters = [];
 
     this.createEncounter = this.createEncounter.bind(this);
+    this.deleteEncounter = this.deleteEncounter.bind(this);
   }
 
   refreshEncounters() {
@@ -47,13 +48,37 @@ class EncounterList extends React.Component {
       .catch(error => console.log(error));
   }
 
+  deleteEncounter(id) {
+    axios
+      .delete(`/api/v1/encounters/${id}`)
+      .then(response => {
+        console.log(response);
+        this.refreshEncounters();
+      })
+      .catch(error => console.log(error));
+  }
+
   render() {
     return (
       <div>
         <PageTitle title="Encounters" />
-        <ul>
-          {this.state.encounters.map(encounter => encounterLi(encounter))}
-        </ul>
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col" className="col-md-4">
+                Name
+              </th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {this.state.encounters.map(encounter =>
+              encounterTableRow(encounter, this.deleteEncounter)
+            )}
+          </tbody>
+        </table>
 
         <EncounterForm createHandler={this.createEncounter} />
       </div>
@@ -61,18 +86,29 @@ class EncounterList extends React.Component {
   }
 }
 
-function encounterLi(encounter) {
+function encounterTableRow(encounter, deleteEncounterHandler) {
   return (
-    <li key={encounter.id}>
-      <Link
-        to={{
-          pathname: `/encounters/${encounter.id}`,
-          state: { encounter: encounter }
-        }}
-      >
-        {encounter.name}
-      </Link>
-    </li>
+    <tr key={encounter.id}>
+      <th scope="row">
+        <Link to={{ pathname: `/encounters/${encounter.id}` }}>
+          {encounter.id}
+        </Link>
+      </th>
+      <th>
+        <Link to={{ pathname: `/encounters/${encounter.id}` }}>
+          {encounter.name}
+        </Link>
+      </th>
+
+      <td>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => deleteEncounterHandler(encounter.id)}
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
   );
 }
 
